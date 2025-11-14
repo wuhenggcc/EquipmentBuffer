@@ -1,13 +1,15 @@
 from flask import Flask, jsonify
 from werkzeug.serving import make_server
 import threading
-from general.equipment_buffer import EquipmentBuffer, FakeDriver
+from general.equipment_buffer import EquipmentBuffer
+from general.equipment_driver import FakeDriver
 
 
 ### a bug here is that this class use threading rather than PyQt6 QThread,
 ### which somehow will start buffer server multiple times if clicking start button repeatedly.
 ### This is temporary avoided by disabling start button when server is running.
 ### But a better solution is to refactor this to use QThread.
+### Tried QThread, but seems not working, need to read more......
 
 class PPMSApp:
     def __init__(self):

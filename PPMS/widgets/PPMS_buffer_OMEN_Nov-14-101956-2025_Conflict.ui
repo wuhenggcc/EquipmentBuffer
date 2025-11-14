@@ -120,14 +120,130 @@
     <property name="title">
      <string>PPMS temperature control</string>
     </property>
-    <widget class="QWidget" name="widget_temperature" native="true">
+    <widget class="QLineEdit" name="le_target_temperature">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>20</y>
-       <width>301</width>
-       <height>211</height>
+       <x>20</x>
+       <y>140</y>
+       <width>121</width>
+       <height>21</height>
       </rect>
+     </property>
+     <property name="placeholderText">
+      <string>K</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_target_temperature">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>120</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>target temperature</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="le_ramp_rate">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>140</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>K/min</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_ramp_rate">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>120</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ramp rate</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_approach_method">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>170</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>approach method</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="cob_temperature_approach">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>190</y>
+       <width>121</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pb_set">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>180</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Set</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_temperature_reading">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>20</y>
+       <width>201</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#0055ff;&quot;&gt;%temperature&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_temperature_state">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>70</y>
+       <width>201</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#0055ff;&quot;&gt;%state&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </widget>
@@ -143,14 +259,130 @@
     <property name="title">
      <string>PPMS field control</string>
     </property>
-    <widget class="QWidget" name="widget_field" native="true">
+    <widget class="QLineEdit" name="lineEdit_5">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>20</y>
-       <width>301</width>
-       <height>211</height>
+       <x>20</x>
+       <y>140</y>
+       <width>121</width>
+       <height>21</height>
       </rect>
+     </property>
+     <property name="placeholderText">
+      <string>Oe</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>120</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>target field</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_6">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>140</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>Oe/s</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_field_ramp_rate">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>120</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ramp rate</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_12">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>170</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>approach method</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="cb_field_approach">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>190</y>
+       <width>121</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_10">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>180</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Set</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_13">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>20</y>
+       <width>201</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#ff5500;&quot;&gt;%field&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_14">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>70</y>
+       <width>201</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#ffaa00;&quot;&gt;%state&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </widget>
@@ -260,260 +492,4 @@
        <height>41</height>
       </rect>
      </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#00aa00;&quot;&gt;%angle&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_19">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>70</y>
-       <width>201</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#00aa7f;&quot;&gt;%state&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="gb_flask">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>180</y>
-      <width>301</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>flask layer</string>
-    </property>
-    <widget class="QPushButton" name="pb_start_buffer_5">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>80</y>
-       <width>131</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Stop flask</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_ip">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>131</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>  IP</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_port">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>30</y>
-       <width>101</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Port</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pb_start_buffer_4">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>80</y>
-       <width>131</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Start flask</string>
-     </property>
-    </widget>
-    <widget class="QSpinBox" name="sb_port">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>50</y>
-       <width>81</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>1024</number>
-     </property>
-     <property name="maximum">
-      <number>49151</number>
-     </property>
-     <property name="value">
-      <number>5001</number>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="le_listen_to">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>131</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>127.0.0.1</string>
-     </property>
-     <property name="placeholderText">
-      <string>127.0.0.1</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="gb_query">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>320</y>
-      <width>301</width>
-      <height>141</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>query layer</string>
-    </property>
-    <widget class="QPushButton" name="pb_stop_query">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>70</y>
-       <width>121</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Stop queries</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>30</y>
-       <width>161</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>subscribe...</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>60</y>
-       <width>151</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>temperature</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_3">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>100</y>
-       <width>151</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>rotator</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_2">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>80</y>
-       <width>151</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>field</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pb_start_query">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>30</y>
-       <width>121</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Start queries</string>
-     </property>
-    </widget>
-   </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>951</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuAbout">
-    <property name="title">
-     <string>About</string>
-    </property>
-    <addaction name="actionabout"/>
-   </widget>
-   <addaction name="menuAbout"/>
-  </widget>
-  <action name="actionabout">
-   <property name="text">
-    <string>about</string>
-   </property>
-  </action>
- </widget>
- <resources/>
- <connections/>
-</ui>
+     <property name="l

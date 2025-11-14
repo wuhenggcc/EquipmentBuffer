@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+    <pointsize>11</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLineEdit" name="le_ramp_rate">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>130</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Oe/s</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="cb_approach">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>180</y>
+     <width>121</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>linear</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>oscillate</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>no o'shoot</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLineEdit" name="le_target">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>130</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Oe</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_approach">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>160</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>approach method</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_reading">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>10</y>
+     <width>201</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#ff5500;&quot;&gt;%field&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_ramp_rate">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>110</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ramp rate</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_state">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>60</y>
+     <width>201</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#ffaa00;&quot;&gt;%state&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pb_set">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>170</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Set</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_target">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>110</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>target field</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
