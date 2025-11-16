@@ -1,18 +1,25 @@
 from PyQt6 import uic
-from PyQt6.QtCore import QObject, pyqtSignal, QTimer, QThread
+from PyQt6.QtCore import QObject, pyqtSignal, QTimer, QThread, pyqtSlot
 import requests
 import traceback
 import os
 
-ui_field_path = os.path.join('PPMS', 'widgets', 'PPMS_field.ui')
-Ui_FieldWidget, BaseClass = uic.load_ui.loadUiType(ui_field_path)
-ui_temperature_path = os.path.join('PPMS', 'widgets', 'PPMS_temperature.ui')
-Ui_TemperatureWidget, BaseClass = uic.load_ui.loadUiType(ui_temperature_path)
+def load_ui_types(filename):
+    path = os.path.join('PPMS', 'widgets', filename)
+    return uic.load_ui.loadUiType(path)
 
-class PPMSTemperatureBlock():
-    def __init__(self, temperature_brick, field_brick) -> None:
-        self.temperature_brick = temperature_brick
-        self.field_brick = field_brick
+Ui_FieldWidget, BaseClass = load_ui_types('PPMS_field.ui')
+Ui_TemperatureWidget, BaseClass = load_ui_types('PPMS_temperature.ui')
+Ui_RotatorWidget, BaseClass = load_ui_types('PPMS_rotator.ui')
+
+class PPMSBehavior():
+    def __init__(self, subscribe_list) -> None:
+        self.field_brick = subscribe_list.get('field', None)
+        self.temperature_brick = subscribe_list.get('temperature', None)
+        self.rotator_brick = subscribe_list.get('rotator', None)
+        
+        self.field_brick.set_field_args.connect(lambda args: self.send_command("set_field", args))
+        self.temperature_brick.set_temperature_args.connect(lambda args: self.send_command("set_temperature", args))
         self.start_query()
 
     def start_query(self):
@@ -31,13 +38,24 @@ class PPMSTemperatureBlock():
         temperature_reading = data.get('temperature')
         self.temperature_brick.update_reading(temperature_reading)
         self.field_brick.update_reading(field_reading)
-        print("Received:", data)
+
+        # print("Received:", data)
 
     def handle_error(self, err):
         print("Connection error:", err)
 
+    def stop_query(self):
+        self.client.stop()
+        self.client_thread.quit()
+        self.client_thread.wait()
+
+    def send_command(self, command, *args):
+        self.client.send_command(command, *args)
+
 
 class PPMSField(BaseClass, Ui_FieldWidget):
+    set_field_args = pyqtSignal(dict)
+
     def __init__(self, parent_widget):
         super().__init__(parent_widget)
         self.setupUi(self)
@@ -45,10 +63,26 @@ class PPMSField(BaseClass, Ui_FieldWidget):
         self.reading_format = '<p><span style=" font-size:20pt; color:#ff5500;">{value}</span></p>'
         self.state_format = '<p><span style=" font-size:20pt; color:#ffaa00;">{state}</span></p>'
 
+        self.pb_set.clicked.connect(self.set_field)
+
     def update_reading(self, field_reading):
         self.label_reading.setText(self.reading_format.format(value = str(field_reading)))
 
+    def set_field(self):
+        target = self.le_target.text()
+        rate = self.le_ramp_rate.text()
+        approach = self.cob_approach.currentText()
+        cmd_arg = {
+            "target": target,
+            "rate": rate,
+            "approach": approach,
+        }
+        self.set_field_args.emit(cmd_arg)
+
+
 class PPMSTemperature(BaseClass, Ui_TemperatureWidget):
+    set_temperature_args = pyqtSignal(dict)
+
     def __init__(self, parent_widget):
         super().__init__(parent_widget)
         self.setupUi(self)
@@ -59,11 +93,45 @@ class PPMSTemperature(BaseClass, Ui_TemperatureWidget):
     def update_reading(self, field_reading):
         self.label_reading.setText(self.reading_format.format(value = str(field_reading)))
 
+    def set_temperature(self):
+        target = self.le_target.text()
+        rate = self.le_ramp_rate.text()
+        approach = self.cob_approach.currentText()
+        cmd_arg = {
+            "target": target,
+            "rate": rate,
+            "approach": approach,
+        }
+        self.set_temperature_args.emit(cmd_arg)
 
+class PPMSRotator(BaseClass, Ui_RotatorWidget):
+    set_angle_args = pyqtSignal(dict)
+
+    def __init__(self, parent_widget):
+        super().__init__(parent_widget)
+        self.setupUi(self)
+
+        self.reading_format = '<p><span style=" font-size:20pt; color:#0055ff;">{value}</span></p>'
+        self.state_format = '<p><span style=" font-size:20pt; color:#00aaff;">{state}</span></p>'
+
+    def update_reading(self, field_reading):
+        self.label_reading.setText(self.reading_format.format(value = str(field_reading)))
+
+    def set_angle(self):
+        target = self.le_target.text()
+        rate = self.le_ramp_rate.text()
+        approach = self.cob_approach.currentText()
+        cmd_arg = {
+            "target": target,
+            "rate": rate,
+            "approach": approach,
+        }
+        self.set_angle_args.emit(cmd_arg)
 
 class PPMSQueryWorker(QObject):
     data_received = pyqtSignal(dict)
     connection_error = pyqtSignal(str)
+    command_sent = pyqtSignal(dict) 
 
     def __init__(self, host="127.0.0.1", port=5001, interval=1000, parent=None):
         """
@@ -73,7 +141,8 @@ class PPMSQueryWorker(QObject):
         :param interval: polling interval in ms
         """
         super().__init__(parent)
-        self.url = f"http://{host}:{port}/data"
+        self.url_data = f"http://{host}:{port}/data"
+        self.url_cmd = f"http://{host}:{port}/command"
         self.timer = QTimer(self)
         self.timer.setInterval(interval)
         self.timer.timeout.connect(self._request_data)
@@ -94,11 +163,29 @@ class PPMSQueryWorker(QObject):
     def _request_data(self):
         """Send GET request to the Flask server."""
         try:
-            response = requests.get(self.url, timeout=2)
+            response = requests.get(self.url_data, timeout=2)
             response.raise_for_status()
             data = response.json()
             self.data_received.emit(data)
         except Exception as e:
             msg = f"Request error: {e}\n{traceback.format_exc()}"
+            print(msg)
+            self.connection_error.emit(str(e))
+
+    
+    @pyqtSlot(str, dict)
+    def send_command(self, cmd, args=None):
+        """Send a command to the PPMS Flask server."""
+        if args is None:
+            args = {}
+        try:
+            payload = {"command": cmd, "args": args}
+            print("Sending command:", payload)
+            response = requests.post(self.url_cmd, json=payload, timeout=3)
+            response.raise_for_status()
+            data = response.json()
+            self.command_sent.emit(data)
+        except Exception as e:
+            msg = f"Command error: {e}\n{traceback.format_exc()}"
             print(msg)
             self.connection_error.emit(str(e))

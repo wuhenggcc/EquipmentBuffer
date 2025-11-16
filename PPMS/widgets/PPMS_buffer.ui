@@ -166,127 +166,14 @@
     <property name="title">
      <string>PPMS rotator control</string>
     </property>
-    <widget class="QLineEdit" name="lineEdit_7">
+    <widget class="QWidget" name="widget_rotator" native="true">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>140</y>
-       <width>121</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="placeholderText">
-      <string>\deg</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_15">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>120</y>
-       <width>131</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>target angle</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_8">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>140</y>
-       <width>121</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_16">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>120</y>
-       <width>121</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>ramp rate</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_17">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>170</y>
-       <width>121</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>approach method</string>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="comboBox_3">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>190</y>
-       <width>121</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_13">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>180</y>
-       <width>71</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Set</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_18">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
+       <x>0</x>
        <y>20</y>
-       <width>201</width>
-       <height>41</height>
+       <width>301</width>
+       <height>211</height>
       </rect>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#00aa00;&quot;&gt;%angle&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_19">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>70</y>
-       <width>201</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#00aa7f;&quot;&gt;%state&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </widget>
@@ -302,7 +189,7 @@
     <property name="title">
      <string>flask layer</string>
     </property>
-    <widget class="QPushButton" name="pb_start_buffer_5">
+    <widget class="QPushButton" name="pb_stop_flask">
      <property name="geometry">
       <rect>
        <x>160</x>
@@ -341,7 +228,7 @@
       <string>Port</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pb_start_buffer_4">
+    <widget class="QPushButton" name="pb_start_flask">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -373,7 +260,7 @@
       <number>5001</number>
      </property>
     </widget>
-    <widget class="QLineEdit" name="le_listen_to">
+    <widget class="QLineEdit" name="le_ip">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -415,7 +302,7 @@
       <string>Stop queries</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="label_subscribe">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -428,7 +315,7 @@
       <string>subscribe...</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox">
+    <widget class="QCheckBox" name="cb_temperature">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -444,7 +331,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_3">
+    <widget class="QCheckBox" name="cb_rotator">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -460,7 +347,7 @@
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_2">
+    <widget class="QCheckBox" name="cb_field">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -489,6 +376,22 @@
       <string>Start queries</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QLabel" name="label_support">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>390</y>
+      <width>301</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;If this tool makes your PPMS workflow easier, I’d really appreciate your support. Please consider giving it a &lt;/span&gt;&lt;span style=&quot; font-size:12pt; color:#d6b551;&quot;&gt;⭐&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; on GitHub (&lt;a href=&quot;https://github.com/wuhenggcc/EquipmentBuffer&quot;&gt;here&lt;/a&gt;)!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

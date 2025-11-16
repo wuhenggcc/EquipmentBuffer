@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>667</width>
-    <height>416</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="font">
@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label_state">
+  <widget class="QLabel" name="label_19">
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -32,42 +32,13 @@
     <enum>Qt::LeftToRight</enum>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#00aaff;&quot;&gt;%state&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#00aa7f;&quot;&gt;%state&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_reading">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>10</y>
-     <width>201</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#0055ff;&quot;&gt;%temperature&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="cob_approach">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>180</y>
-     <width>121</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pb_set">
+  <widget class="QPushButton" name="pushButton_13">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -80,20 +51,7 @@
     <string>Set</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="le_target">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>130</y>
-     <width>121</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>K</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_approach">
+  <widget class="QLabel" name="label_17">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -106,7 +64,40 @@
     <string>approach method</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_ramp_rate">
+  <widget class="QLabel" name="label_15">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>110</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>target angle</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>180</y>
+     <width>121</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_8">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>130</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_16">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -119,39 +110,39 @@
     <string>ramp rate</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="le_ramp_rate">
+  <widget class="QLabel" name="label_18">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>70</x>
+     <y>10</y>
+     <width>201</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; color:#00aa00;&quot;&gt;%angle&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_7">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
      <y>130</y>
      <width>121</width>
      <height>21</height>
     </rect>
    </property>
    <property name="placeholderText">
-    <string>K/min</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_target">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>110</y>
-     <width>131</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>target temperature</string>
+    <string>\deg</string>
    </property>
   </widget>
  </widget>
- <tabstops>
-  <tabstop>le_target</tabstop>
-  <tabstop>le_ramp_rate</tabstop>
-  <tabstop>cob_approach</tabstop>
-  <tabstop>pb_set</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>
