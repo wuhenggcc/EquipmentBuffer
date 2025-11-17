@@ -43,14 +43,15 @@ class PPMSApp():
         def command():
             data = request.json
             cmd = data.get("command")
-            args = data.get("args", [])
+            args = data.get("args")
 
             print(f"Received command: {cmd} with args: {args}")
             
             if not cmd:
                 print("No command provided.")
                 return jsonify({"error": "No command provided."}), 400
-            self.buffer.send_command(cmd, *args)
+            print(*args)
+            self.buffer.send_command(cmd, tuple(args.values()))
             return jsonify({"status": "queued", "command": cmd})
 
     def start(self, host="127.0.0.1", port=5001):

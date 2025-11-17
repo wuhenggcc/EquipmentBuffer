@@ -1,12 +1,12 @@
-from PyQt6 import uic
-from PyQt6.QtCore import QObject, pyqtSignal, QTimer, QThread, pyqtSlot
+from PyQt5 import uic
+from PyQt5.QtCore import QObject, pyqtSignal, QTimer, QThread, pyqtSlot
 import requests
 import traceback
 import os
 
 def load_ui_types(filename):
     path = os.path.join('PPMS', 'widgets', filename)
-    return uic.load_ui.loadUiType(path)
+    return uic.loadUiType(path)
 
 Ui_FieldWidget, BaseClass = load_ui_types('PPMS_field.ui')
 Ui_TemperatureWidget, BaseClass = load_ui_types('PPMS_temperature.ui')
@@ -49,8 +49,8 @@ class PPMSBehavior():
         self.client_thread.quit()
         self.client_thread.wait()
 
-    def send_command(self, command, *args):
-        self.client.send_command(command, *args)
+    def send_command(self, command, args):
+        self.client.send_command(command, args)
 
 
 class PPMSField(BaseClass, Ui_FieldWidget):
@@ -72,13 +72,12 @@ class PPMSField(BaseClass, Ui_FieldWidget):
         target = self.le_target.text()
         rate = self.le_ramp_rate.text()
         approach = self.cob_approach.currentText()
-        cmd_arg = {
+        cmd_args = {
             "target": target,
             "rate": rate,
             "approach": approach,
         }
-        self.set_field_args.emit(cmd_arg)
-
+        self.set_field_args.emit(cmd_args)
 
 class PPMSTemperature(BaseClass, Ui_TemperatureWidget):
     set_temperature_args = pyqtSignal(dict)
@@ -89,6 +88,7 @@ class PPMSTemperature(BaseClass, Ui_TemperatureWidget):
 
         self.reading_format = '<p><span style=" font-size:20pt; color:#0055ff;">{value}</span></p>'
         self.state_format = '<p><span style=" font-size:20pt; color:#00aaff;">{state}</span></p>'
+        self.pb_set.clicked.connect(self.set_temperature)
 
     def update_reading(self, field_reading):
         self.label_reading.setText(self.reading_format.format(value = str(field_reading)))
@@ -97,12 +97,12 @@ class PPMSTemperature(BaseClass, Ui_TemperatureWidget):
         target = self.le_target.text()
         rate = self.le_ramp_rate.text()
         approach = self.cob_approach.currentText()
-        cmd_arg = {
+        cmd_args = {
             "target": target,
             "rate": rate,
             "approach": approach,
         }
-        self.set_temperature_args.emit(cmd_arg)
+        self.set_temperature_args.emit(cmd_args)
 
 class PPMSRotator(BaseClass, Ui_RotatorWidget):
     set_angle_args = pyqtSignal(dict)

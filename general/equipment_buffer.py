@@ -21,7 +21,7 @@ class EquipmentBuffer:
         self.running = False
 
 
-    def send_command(self, cmd, *args):
+    def send_command(self, cmd, args):
         """Add a command to the queue."""
         self.command_queue.put((cmd, args))
 
@@ -49,6 +49,7 @@ class EquipmentBuffer:
         """Execute all pending commands."""
         while not self.command_queue.empty():
             cmd, args = self.command_queue.get()
+            print(f"Processing command: {cmd} with args: {args}")
             try:
                 method = getattr(self.driver, cmd)
                 method(*args)

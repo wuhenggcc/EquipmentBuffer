@@ -13,10 +13,10 @@ class FakeDriver():
         time.sleep(0.1)
         return random.uniform(4, 5)
     
-    def set_field(self, target_field, ramp_rate, approach_method='linear'):
-        print(f"Setting field to {target_field} T with a ramp rate of {ramp_rate} T/min using {approach_method} approach.")
+    def set_field(self, target, rate, approach='linear', *args):
+        print(f"Setting field to {target} T with a ramp rate of {rate} T/min using {approach} approach.")
     
-    def set_temperature(self, target_temp, ramp_rate, approach_method='linear'):
-        print(f"Setting temperature to {target_temp} K with a ramp rate of {ramp_rate} K/min using {approach_method} approach.")
+    def set_temperature(self, target, rate, approach='linear'):
+        print(f"Setting temperature to {target} K with a ramp rate of {rate} K/min using {approach} approach.")
 
 

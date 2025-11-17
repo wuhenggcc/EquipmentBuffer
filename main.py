@@ -1,16 +1,16 @@
 import os
 import sys
-from PyQt6 import uic
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QApplication
+from PyQt5 import uic
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication
 from PPMS.PPMS_app import PPMSApp
 from PPMS.PPMS_driver import PPMSDriver
-from PPMS.PPMS_requests import PPMSBehavior, PPMSField, PPMSTemperature, PPMSRotator
+from PPMS.PPMS_behavior import PPMSBehavior, PPMSField, PPMSTemperature, PPMSRotator
 from general.equipment_driver import FakeDriver
 from general.equipment_buffer import EquipmentBuffer
 
 ui_path = os.path.join('PPMS', 'widgets', 'PPMS_buffer.ui')
-Ui_SequenceWindow, BaseClass = uic.load_ui.loadUiType(ui_path)
+Ui_SequenceWindow, BaseClass = uic.loadUiType(ui_path)
 
 
 class PPMSWindow(BaseClass, Ui_SequenceWindow):
@@ -35,6 +35,10 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
         self.is_flask_running = False
         self.is_query_running = False
         self._gui_state()
+        
+        self.gb_field.setEnabled(False)
+        self.gb_temperature.setEnabled(False)
+        self.gb_rotator.setEnabled(False)
 
         self.pb_connect.clicked.connect(self.connect_driver)
         self.pb_disconnect.clicked.connect(self.disconnect_driver)
@@ -57,6 +61,7 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
         self.pb_start_query.setEnabled(self.is_flask_running and not self.is_query_running)
         self.pb_stop_query.setEnabled(self.is_flask_running and self.is_query_running)
 
+
     def connect_driver(self):
         address = self.le_address.text()
         self.driver = FakeDriver(address)
@@ -68,11 +73,10 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
         Disconnect the current driver.
         """
         self.driver = None
+        self.is_conected = False
         self._gui_state()
 
     def start_buffer(self):
-        self.pb_start_buffer.setEnabled(False)
-        self.pb_stop_buffer.setEnabled(True)
         self.buffer = EquipmentBuffer(self.driver)
         self.buffer.start()
         self.is_buffer_running = True
@@ -107,10 +111,13 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
     def start_query(self):
         subscribe_list = {}
         if self.cb_field.isChecked():
+            self.gb_field.setEnabled(True)
             subscribe_list['field']= self.field
         if self.cb_temperature.isChecked():
+            self.gb_temperature.setEnabled(True)
             subscribe_list['temperature']= self.temperature
-        if self.cbrotator.isChecked():
+        if self.cb_rotator.isChecked():
+            self.gb_rotator.setEnabled(True)
             subscribe_list['rotator']= self.rotator
         self.behavior = PPMSBehavior(subscribe_list)
         self.is_query_running = True
@@ -123,8 +130,6 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
 
     def closeEvent(self, event):
         event.accept()
-
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

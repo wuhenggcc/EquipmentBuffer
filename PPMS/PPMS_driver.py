@@ -1,5 +1,5 @@
 import os
-from PyQt6 import uic
+from PyQt5 import uic
 from .PPMS_app import PPMSApp
 # import MultiPyVu as mpv
 import time, random
