@@ -17,11 +17,6 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pb_start_buffer.clicked.connect(self.start_buffer)
-        self.pb_stop_buffer.clicked.connect(self.stop_buffer)
-
-        self.pb_start_query.clicked.connect(self.start_query)
-        self.pb_stop_query.clicked.connect(self.stop_query)
 
         self.field = PPMSField(self.widget_field)
         self.temperature = PPMSTemperature(self.widget_temperature)
@@ -35,17 +30,21 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
         self.is_flask_running = False
         self.is_query_running = False
         self._gui_state()
-        
+
+        self.buffer = None
+        self.buffer_server = None
+        self.behavior = None
+
         self.gb_field.setEnabled(False)
         self.gb_temperature.setEnabled(False)
         self.gb_rotator.setEnabled(False)
 
         self.pb_connect.clicked.connect(self.connect_driver)
         self.pb_disconnect.clicked.connect(self.disconnect_driver)
-
+        self.pb_start_buffer.clicked.connect(self.start_buffer)
+        self.pb_stop_buffer.clicked.connect(self.stop_buffer)
         self.pb_start_flask.clicked.connect(self.start_flask)
         self.pb_stop_flask.clicked.connect(self.stop_flask)
-
         self.pb_start_query.clicked.connect(self.start_query)
         self.pb_stop_query.clicked.connect(self.stop_query)
 
@@ -61,7 +60,6 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
         self.pb_start_query.setEnabled(self.is_flask_running and not self.is_query_running)
         self.pb_stop_query.setEnabled(self.is_flask_running and self.is_query_running)
 
-
     def connect_driver(self):
         address = self.le_address.text()
         self.driver = FakeDriver(address)
@@ -73,10 +71,11 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
         Disconnect the current driver.
         """
         self.driver = None
-        self.is_conected = False
         self._gui_state()
 
     def start_buffer(self):
+        self.pb_start_buffer.setEnabled(False)
+        self.pb_stop_buffer.setEnabled(True)
         self.buffer = EquipmentBuffer(self.driver)
         self.buffer.start()
         self.is_buffer_running = True
@@ -119,12 +118,15 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
         if self.cb_rotator.isChecked():
             self.gb_rotator.setEnabled(True)
             subscribe_list['rotator']= self.rotator
-        self.behavior = PPMSBehavior(subscribe_list)
+        if not self.behavior:
+            self.behavior = PPMSBehavior(subscribe_list)
         self.is_query_running = True
         self._gui_state()
 
     def stop_query(self):
-        self.behavior.stop_query()
+        if self.behavior:
+            self.behavior.stop_query()
+        self.behavior = None
         self.is_query_running = False
         self._gui_state()
 

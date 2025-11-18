@@ -45,12 +45,11 @@ class PPMSApp():
             cmd = data.get("command")
             args = data.get("args")
 
-            print(f"Received command: {cmd} with args: {args}")
+            # print(f"Received command: {cmd} with args: {args}")
             
             if not cmd:
                 print("No command provided.")
                 return jsonify({"error": "No command provided."}), 400
-            print(*args)
             self.buffer.send_command(cmd, tuple(args.values()))
             return jsonify({"status": "queued", "command": cmd})
 

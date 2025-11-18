@@ -49,7 +49,7 @@ class EquipmentBuffer:
         """Execute all pending commands."""
         while not self.command_queue.empty():
             cmd, args = self.command_queue.get()
-            print(f"Processing command: {cmd} with args: {args}")
+            # print(f"Processing command: {cmd} with args: {args}")
             try:
                 method = getattr(self.driver, cmd)
                 method(*args)

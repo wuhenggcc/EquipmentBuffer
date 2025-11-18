@@ -105,6 +105,7 @@ class PPMSTemperature(BaseClass, Ui_TemperatureWidget):
         self.set_temperature_args.emit(cmd_args)
 
 class PPMSRotator(BaseClass, Ui_RotatorWidget):
+    """ not implemented yet """
     set_angle_args = pyqtSignal(dict)
 
     def __init__(self, parent_widget):

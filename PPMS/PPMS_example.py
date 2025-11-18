@@ -43,7 +43,7 @@ class PPMSExample():
             response = requests.post(self.url_cmd, json=payload, timeout=3)
             response.raise_for_status()
             data = response.json()
-            print("Command response:", data)
+            # print("Command response:", data)
             return data
         except Exception as e:
             msg = f"Command error: {e}\n{traceback.format_exc()}"
