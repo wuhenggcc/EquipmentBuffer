@@ -24,4 +24,3 @@ class PPMSDriver():
     def get_all(self):
         for sub in self.subscribes:
             self._method_map[sub]()
-

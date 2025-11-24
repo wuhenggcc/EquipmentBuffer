@@ -13,24 +13,27 @@ Ui_TemperatureWidget, BaseClass = load_ui_types('PPMS_temperature.ui')
 Ui_RotatorWidget, BaseClass = load_ui_types('PPMS_rotator.ui')
 
 class PPMSBehavior():
-    def __init__(self, subscribe_list) -> None:
+    def __init__(self, host, port, subscribe_list) -> None:
+        self.host = host
+        self.port = port
+
         self.field_brick = subscribe_list.get('field', None)
         self.temperature_brick = subscribe_list.get('temperature', None)
         self.rotator_brick = subscribe_list.get('rotator', None)
-        
+        self.init_query_worker()
+
+    def init_query_worker(self):
+        # Setup client in a separate QThread
         self.field_brick.set_field_args.connect(lambda args: self.send_command("set_field", args))
         self.temperature_brick.set_temperature_args.connect(lambda args: self.send_command("set_temperature", args))
-        self.start_query()
-
-    def start_query(self):
-        # Setup client in a separate QThread
         self.client_thread = QThread()
-        self.client = PPMSQueryWorker(host="127.0.0.1", port=5001, interval=2000)
+        self.client = PPMSQueryWorker(self.host, self.port)
         self.client.moveToThread(self.client_thread)
         self.client_thread.started.connect(self.client.start)
         self.client.data_received.connect(self.handle_data)
-        self.client.connection_error.connect(self.handle_error)
+        self.client.connection_error.connect(self.handle_error)        
 
+    def start_query(self):
         self.client_thread.start()
 
     def handle_data(self, data):
@@ -134,7 +137,7 @@ class PPMSQueryWorker(QObject):
     connection_error = pyqtSignal(str)
     command_sent = pyqtSignal(dict) 
 
-    def __init__(self, host="127.0.0.1", port=5001, interval=1000, parent=None):
+    def __init__(self, host, port, interval=1000, parent=None):
         """
         A client to periodically request data from the PPMS Flask buffer.
         :param host: Flask server address
@@ -158,9 +161,10 @@ class PPMSQueryWorker(QObject):
     def stop(self):
         """Stop polling."""
         if self.running:
-            self.running = False
             self.timer.stop()
+            self.running = False
 
+    @pyqtSlot()
     def _request_data(self):
         """Send GET request to the Flask server."""
         try:

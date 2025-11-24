@@ -119,7 +119,10 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
             self.gb_rotator.setEnabled(True)
             subscribe_list['rotator']= self.rotator
         if not self.behavior:
-            self.behavior = PPMSBehavior(subscribe_list)
+            host = self.le_ip.text()
+            port = self.sb_port.value()
+            self.behavior = PPMSBehavior(host, port, subscribe_list)
+            self.behavior.start_query()
         self.is_query_running = True
         self._gui_state()
 
