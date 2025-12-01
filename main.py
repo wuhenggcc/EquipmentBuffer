@@ -62,7 +62,8 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
 
     def connect_driver(self):
         address = self.le_address.text()
-        self.driver = FakeDriver(address)
+        # self.driver = FakeDriver(address)
+        self.driver = PPMSDriver(address)
         self.is_conected = True
         self._gui_state()
 
@@ -70,7 +71,9 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
         """
         Disconnect the current driver.
         """
+        self.driver.disconnect()
         self.driver = None
+        self.is_conected = False
         self._gui_state()
 
     def start_buffer(self):
@@ -134,6 +137,8 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
         self._gui_state()
 
     def closeEvent(self, event):
+        if self.is_conected:
+            self.driver.disconnect()
         event.accept()
 
 if __name__ == "__main__":

@@ -14,6 +14,11 @@ class FakeDriver():
         return random.uniform(4, 5)
     
     def set_field(self, target, rate, approach='linear'):
+        match approach:
+            case 'linear': approach = "linear",
+            case 'oscillate': approach = "oscillate",
+            case "no o'shoot": approach = "no_overshoot",
+            case _: raise ValueError(f"set field has no approach mode of {approach}")
         print(f"Setting field to {target} T with a ramp rate of {rate} T/min using {approach} approach.")
     
     def set_temperature(self, target, rate, approach='linear'):

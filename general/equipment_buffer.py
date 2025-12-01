@@ -4,7 +4,7 @@ import queue
 from werkzeug.serving import WSGIRequestHandler
 
 class EquipmentBuffer:
-    def __init__(self, driver, interval=0.1):
+    def __init__(self, driver, interval=0.5):
         self.driver = driver
         self.interval = interval
         self.cache = {}
@@ -29,10 +29,11 @@ class EquipmentBuffer:
         while self.running:
             # 1. Execute commands first
             self._process_commands()
-
+            time.sleep(0.5)
             # 2. Then collect data
             try:
                 field = self.driver.get_field()
+                time.sleep(0.5)
                 temperature = self.driver.get_temperature()
                 with self.lock:
                     self.cache = {
@@ -49,7 +50,7 @@ class EquipmentBuffer:
         """Execute all pending commands."""
         while not self.command_queue.empty():
             cmd, args = self.command_queue.get()
-            # print(f"Processing command: {cmd} with args: {args}")
+            print(f"Processing command: {cmd} with args: {args}")
             try:
                 method = getattr(self.driver, cmd)
                 method(*args)

@@ -41,6 +41,9 @@
        <height>21</height>
       </rect>
      </property>
+     <property name="text">
+      <string>10.35.160.158</string>
+     </property>
     </widget>
     <widget class="QLabel" name="label_address">
      <property name="geometry">

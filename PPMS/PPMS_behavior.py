@@ -69,7 +69,8 @@ class PPMSField(BaseClass, Ui_FieldWidget):
         self.pb_set.clicked.connect(self.set_field)
 
     def update_reading(self, field_reading):
-        self.label_reading.setText(self.reading_format.format(value = str(field_reading)))
+        self.label_reading.setText(self.reading_format.format(value = str(field_reading[0])))
+        self.label_state.setText(self.reading_format.format(value = str(field_reading[1])))
 
     def set_field(self):
         target = self.le_target.text()
@@ -93,8 +94,9 @@ class PPMSTemperature(BaseClass, Ui_TemperatureWidget):
         self.state_format = '<p><span style=" font-size:20pt; color:#00aaff;">{state}</span></p>'
         self.pb_set.clicked.connect(self.set_temperature)
 
-    def update_reading(self, field_reading):
-        self.label_reading.setText(self.reading_format.format(value = str(field_reading)))
+    def update_reading(self, temperature_reading):
+        self.label_reading.setText(self.reading_format.format(value = str(temperature_reading[0])))
+        self.label_state.setText(self.reading_format.format(value = str(temperature_reading[1])))
 
     def set_temperature(self):
         target = self.le_target.text()
@@ -119,7 +121,8 @@ class PPMSRotator(BaseClass, Ui_RotatorWidget):
         self.state_format = '<p><span style=" font-size:20pt; color:#00aaff;">{state}</span></p>'
 
     def update_reading(self, field_reading):
-        self.label_reading.setText(self.reading_format.format(value = str(field_reading)))
+        self.label_reading.setText(self.reading_format.format(value = str(field_reading[0])))
+        self.label_state.setText(self.reading_format.format(value = str(field_reading[1])))
 
     def set_angle(self):
         target = self.le_target.text()

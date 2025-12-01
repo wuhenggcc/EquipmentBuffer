@@ -66,6 +66,16 @@
      <height>22</height>
     </rect>
    </property>
+   <item>
+    <property name="text">
+     <string>fast_settle</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>no_overshoot</string>
+    </property>
+   </item>
   </widget>
   <widget class="QPushButton" name="pb_set">
    <property name="geometry">
