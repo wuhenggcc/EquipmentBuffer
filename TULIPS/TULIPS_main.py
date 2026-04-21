@@ -1,43 +1,41 @@
 import os
 
 from PyQt5 import uic
-from PyQt5.QtCore import Qt
 
-from .PPMS_app import PPMSApp
-from .PPMS_behavior import PPMSBehavior, PPMSField, PPMSTemperature, PPMSRotator
-from .PPMS_driver import PPMSDriver
 from general.equipment_buffer import EquipmentBuffer
+from .TULIPS_app import TULIPSApp
+from .TULIPS_behavior import TULIPSBehavior, TULIPSRotator
+from .TULIPS_driver import TULIPSDriver
 
-ui_path = os.path.join("PPMS", "widgets", "PPMS_buffer.ui")
+ui_path = os.path.join("TULIPS", "widgets", "TULIPS_main.ui")
 Ui_SequenceWindow, BaseClass = uic.loadUiType(ui_path)
 
 
-class PPMSWindow(BaseClass, Ui_SequenceWindow):
+class TULIPSWindow(BaseClass, Ui_SequenceWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.setWindowTitle("TULIPS buffer layer")
 
-        self.field = PPMSField(self.widget_field)
-        self.temperature = PPMSTemperature(self.widget_temperature)
-        self.rotator = PPMSRotator(self.widget_rotator)
-
-        self.label_support.setTextInteractionFlags(Qt.TextInteractionFlag.TextBrowserInteraction)
-        self.label_support.setOpenExternalLinks(True)
+        self.rotator = TULIPSRotator(self.widget_rotator)
 
         self.is_conected = False
         self.is_buffer_running = False
         self.is_flask_running = False
         self.is_query_running = False
-        self._gui_state()
 
         self.driver = None
         self.buffer = None
         self.buffer_server = None
         self.behavior = None
 
-        self.gb_field.setEnabled(False)
-        self.gb_temperature.setEnabled(False)
+        self.cb_temperature.setChecked(False)
+        self.cb_temperature.setEnabled(False)
+        self.cb_field.setChecked(False)
+        self.cb_field.setEnabled(False)
+        self.cb_rotator.setChecked(True)
         self.gb_rotator.setEnabled(False)
+        self._gui_state()
 
         self.pb_connect.clicked.connect(self.connect_driver)
         self.pb_disconnect.clicked.connect(self.disconnect_driver)
@@ -62,7 +60,7 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
 
     def connect_driver(self):
         address = self.le_address.text()
-        self.driver = PPMSDriver(address)
+        self.driver = TULIPSDriver(address)
         self.is_conected = True
         self._gui_state()
 
@@ -74,8 +72,6 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
         self._gui_state()
 
     def start_buffer(self):
-        self.pb_start_buffer.setEnabled(False)
-        self.pb_stop_buffer.setEnabled(True)
         self.buffer = EquipmentBuffer(self.driver)
         self.buffer.start()
         self.is_buffer_running = True
@@ -91,7 +87,7 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
     def start_flask(self):
         url = self.le_ip.text()
         port = self.sb_port.value()
-        self.buffer_server = PPMSApp(self.buffer)
+        self.buffer_server = TULIPSApp(self.buffer)
         self.buffer_server.start(url, port)
         self.is_flask_running = True
         self._gui_state()
@@ -111,16 +107,6 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
 
     def start_query(self):
         subscribe_list = {}
-        if self.cb_field.isChecked():
-            self.gb_field.setEnabled(True)
-            subscribe_list["field"] = self.field
-        else:
-            self.gb_field.setEnabled(False)
-        if self.cb_temperature.isChecked():
-            self.gb_temperature.setEnabled(True)
-            subscribe_list["temperature"] = self.temperature
-        else:
-            self.gb_temperature.setEnabled(False)
         if self.cb_rotator.isChecked():
             self.gb_rotator.setEnabled(True)
             subscribe_list["rotator"] = self.rotator
@@ -129,7 +115,7 @@ class PPMSWindow(BaseClass, Ui_SequenceWindow):
         if not self.behavior:
             host = self.le_ip.text()
             port = self.sb_port.value()
-            self.behavior = PPMSBehavior(host, port, subscribe_list)
+            self.behavior = TULIPSBehavior(host, port, subscribe_list)
             self.behavior.start_query()
         self.is_query_running = True
         self._gui_state()

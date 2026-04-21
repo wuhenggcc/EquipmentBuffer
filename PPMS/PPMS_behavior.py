@@ -24,8 +24,18 @@ class PPMSBehavior():
 
     def init_query_worker(self):
         # Setup client in a separate QThread
-        self.field_brick.set_field_args.connect(lambda args: self.send_command("set_field", args))
-        self.temperature_brick.set_temperature_args.connect(lambda args: self.send_command("set_temperature", args))
+        if self.field_brick:
+            self.field_brick.set_field_args.connect(
+                lambda args: self.send_command("set_field", args)
+            )
+        if self.temperature_brick:
+            self.temperature_brick.set_temperature_args.connect(
+                lambda args: self.send_command("set_temperature", args)
+            )
+        if self.rotator_brick:
+            self.rotator_brick.set_angle_args.connect(
+                lambda args: self.send_command("set_angle", args)
+            )
         self.client_thread = QThread()
         self.client = PPMSQueryWorker(self.host, self.port)
         self.client.moveToThread(self.client_thread)
@@ -39,8 +49,13 @@ class PPMSBehavior():
     def handle_data(self, data):
         field_reading = data.get('field')
         temperature_reading = data.get('temperature')
-        self.temperature_brick.update_reading(temperature_reading)
-        self.field_brick.update_reading(field_reading)
+        rotator_reading = data.get('rotator')
+        if self.temperature_brick and temperature_reading is not None:
+            self.temperature_brick.update_reading(temperature_reading)
+        if self.field_brick and field_reading is not None:
+            self.field_brick.update_reading(field_reading)
+        if self.rotator_brick and rotator_reading is not None:
+            self.rotator_brick.update_reading(rotator_reading)
 
         # print("Received:", data)
 
@@ -110,7 +125,6 @@ class PPMSTemperature(BaseClass, Ui_TemperatureWidget):
         self.set_temperature_args.emit(cmd_args)
 
 class PPMSRotator(BaseClass, Ui_RotatorWidget):
-    """ not implemented yet """
     set_angle_args = pyqtSignal(dict)
 
     def __init__(self, parent_widget):
@@ -119,10 +133,11 @@ class PPMSRotator(BaseClass, Ui_RotatorWidget):
 
         self.reading_format = '<p><span style=" font-size:20pt; color:#0055ff;">{value}</span></p>'
         self.state_format = '<p><span style=" font-size:20pt; color:#00aaff;">{state}</span></p>'
+        self.pb_set.clicked.connect(self.set_angle)
 
     def update_reading(self, field_reading):
         self.label_reading.setText(self.reading_format.format(value = str(field_reading[0])))
-        self.label_state.setText(self.reading_format.format(value = str(field_reading[1])))
+        self.label_state.setText(self.state_format.format(state = str(field_reading[1])))
 
     def set_angle(self):
         target = self.le_target.text()

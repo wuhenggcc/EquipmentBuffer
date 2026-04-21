@@ -12,8 +12,20 @@ class EquipmentBuffer:
         self.running = False
 
         self.command_queue = queue.Queue()
+        self.readers = self._build_readers()
+
+    def _build_readers(self):
+        readers = {}
+        for key in ("field", "temperature", "rotator"):
+            method_name = f"get_{key}"
+            method = getattr(self.driver, method_name, None)
+            if callable(method):
+                readers[key] = method
+        return readers
 
     def start(self):
+        if self.running:
+            return
         self.running = True
         threading.Thread(target=self._poll_loop, daemon=True).start()
 
@@ -32,15 +44,13 @@ class EquipmentBuffer:
             time.sleep(0.5)
             # 2. Then collect data
             try:
-                field = self.driver.get_field()
-                time.sleep(0.5)
-                temperature = self.driver.get_temperature()
+                cache = {}
+                for key, reader in self.readers.items():
+                    cache[key] = reader()
+                    time.sleep(0.1)
                 with self.lock:
-                    self.cache = {
-                        "field": field,
-                        "temperature": temperature,
-                        "timestamp": time.time(),
-                    }
+                    cache["timestamp"] = time.time()
+                    self.cache = cache
             except Exception as e:
                 print("Polling error:", e)
 
