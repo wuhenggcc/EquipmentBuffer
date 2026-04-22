@@ -13,12 +13,12 @@ class TULIPSDriver:
 
     def get_rotator(self):
         try:
-            angle = self.client.measure_current_position() + self.client.offset_angle
+            angle = self.client.angle
             return (angle, self._state)
         except Exception:
             return (np.nan, "unknown")
 
-    def set_angle(self, target, rate=None, approach=None):
+    def set_angle(self, target):
         try:
             target = float(target)
         except Exception as exc:

@@ -288,6 +288,7 @@ class PositionerDriver:
                 self.set_step_number(new_step_number)
             while self.get_step_number() != 0:
                 pass
+            self.measure_current_position()
             current_position = self.pot_pzo_to_angle(self.read_pot_pzo())
         self.measure_current_position()
 

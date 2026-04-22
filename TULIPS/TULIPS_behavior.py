@@ -81,8 +81,6 @@ class TULIPSRotator(BaseClass, Ui_RotatorWidget):
     def set_angle(self):
         cmd_args = {
             "target": self.le_target.text(),
-            "rate": "",
-            "approach": "",
         }
         self.set_angle_args.emit(cmd_args)
 

@@ -41,7 +41,7 @@ class EquipmentBuffer:
         while self.running:
             # 1. Execute commands first
             self._process_commands()
-            time.sleep(0.5)
+            # time.sleep(0.5)
             # 2. Then collect data
             try:
                 cache = {}
